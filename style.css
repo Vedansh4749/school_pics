@@ -63,10 +63,11 @@ h1 {
 
 #download {
   margin-top: 12px;
-  padding: 10px 16px;
-  background: #007bff;
-  color: white;
-  text-decoration: none;
+  padding: 10px 18px;
+  font-size: 16px;
+  border: none;
   border-radius: 6px;
-  font-size: 15px;
+  background: #6200ff;
+  color: white;
+  cursor: pointer;
 }

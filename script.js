@@ -360,7 +360,9 @@ const gallery = document.getElementById("gallery");
 const modal = document.getElementById("modal");
 const modalImg = document.getElementById("modal-img");
 const downloadBtn = document.getElementById("download");
-const close = document.getElementById("close");
+const closeBtn = document.getElementById("close");
+
+let currentImage = "";
 
 images.forEach(img => {
   const card = document.createElement("div");
@@ -371,14 +373,24 @@ images.forEach(img => {
   image.loading = "lazy";
 
   image.onclick = () => {
+    currentImage = `images/${img}`;
     modal.style.display = "flex";
-    modalImg.src = `images/${img}`;
-    downloadBtn.href = `images/${img}`;
+    modalImg.src = currentImage;
   };
 
   card.appendChild(image);
   gallery.appendChild(card);
 });
 
-close.onclick = () => modal.style.display = "none";
+// 🔥 SOLO FORCE DOWNLOAD
+downloadBtn.onclick = () => {
+  const a = document.createElement("a");
+  a.href = currentImage;
+  a.download = currentImage.split("/").pop();
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+};
+
+closeBtn.onclick = () => modal.style.display = "none";
 modal.onclick = e => e.target === modal && (modal.style.display = "none");
