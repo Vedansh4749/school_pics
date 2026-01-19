@@ -1,0 +1,72 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f3f3f3;
+  text-align: center;
+}
+
+h1 {
+  margin: 15px;
+  font-size: 22px;
+}
+
+/* GALLERY GRID */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 10px;
+  padding: 10px;
+}
+
+.card img {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* MOBILE OPTIMIZATION */
+@media (min-width: 768px) {
+  .card img {
+    height: 180px;
+  }
+}
+
+/* MODAL */
+.modal {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 999;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal img {
+  max-width: 95%;
+  max-height: 80vh;
+  border-radius: 6px;
+ reduce: image-rendering auto;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 32px;
+  color: white;
+  cursor: pointer;
+}
+
+#download {
+  margin-top: 12px;
+  padding: 10px 16px;
+  background: #007bff;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-size: 15px;
+}
