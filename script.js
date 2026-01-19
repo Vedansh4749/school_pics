@@ -356,6 +356,7 @@ const images = [
   // 300+ images yaha
 ];
 
+
 const gallery = document.getElementById("gallery");
 const modal = document.getElementById("modal");
 const modalImg = document.getElementById("modal-img");
@@ -364,6 +365,7 @@ const closeBtn = document.getElementById("close");
 
 let currentImage = "";
 
+/* ===== CREATE GALLERY ===== */
 images.forEach(img => {
   const card = document.createElement("div");
   card.className = "card";
@@ -371,6 +373,10 @@ images.forEach(img => {
   const image = document.createElement("img");
   image.src = `thumbs/${img}`;
   image.loading = "lazy";
+
+  image.onload = () => {
+    image.classList.add("loaded"); // remove blur
+  };
 
   image.onclick = () => {
     currentImage = `images/${img}`;
@@ -382,8 +388,10 @@ images.forEach(img => {
   gallery.appendChild(card);
 });
 
-// 🔥 SOLO FORCE DOWNLOAD
+/* ===== FORCE DOWNLOAD ===== */
 downloadBtn.onclick = () => {
+  if (!currentImage) return;
+
   const a = document.createElement("a");
   a.href = currentImage;
   a.download = currentImage.split("/").pop();
@@ -392,5 +400,8 @@ downloadBtn.onclick = () => {
   document.body.removeChild(a);
 };
 
+/* ===== CLOSE MODAL ===== */
 closeBtn.onclick = () => modal.style.display = "none";
-modal.onclick = e => e.target === modal && (modal.style.display = "none");
+modal.onclick = e => {
+  if (e.target === modal) modal.style.display = "none";
+};
