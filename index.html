@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Annual Function Gallery</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -17,11 +17,15 @@
 <div class="modal" id="modal">
   <span class="close" id="close">&times;</span>
 
-  <div class="modal-content">
-    <img id="modal-img">
-    <button id="download">⬇ Download</button>
+<div class="modal-content">
+  <div class="modal-img-wrapper">
+    <div class="loader" id="loader"></div>
+    <img id="modalImg" alt="Full Image">
   </div>
+
+  <button id="download">⬇ Download ⬇</button>
 </div>
+
 
 <script src="script.js"></script>
 </body>

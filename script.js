@@ -359,9 +359,10 @@ const images = [
 
 const gallery = document.getElementById("gallery");
 const modal = document.getElementById("modal");
-const modalImg = document.getElementById("modal-img");
+const modalImg = document.getElementById("modalImg");
 const downloadBtn = document.getElementById("download");
 const closeBtn = document.getElementById("close");
+const loader = document.getElementById("loader");
 
 let currentImage = "";
 
@@ -374,21 +375,48 @@ images.forEach(img => {
   image.src = `thumbs/${img}`;
   image.loading = "lazy";
 
-  image.onload = () => {
-    image.classList.add("loaded"); // remove blur
-  };
+  image.onload = () => image.classList.add("loaded");
 
-  image.onclick = () => {
-    currentImage = `images/${img}`;
-    modal.style.display = "flex";
-    modalImg.src = currentImage;
-  };
+  image.onclick = () => openImage(`images/${img}`);
 
   card.appendChild(image);
   gallery.appendChild(card);
 });
 
-/* ===== FORCE DOWNLOAD ===== */
+/* ===== OPEN IMAGE ===== */
+function openImage(src) {
+  currentImage = src;
+
+  // show loader + blur image
+  loader.style.display = "block";
+  modalImg.classList.add("loading");
+
+  // important: set src AFTER loader
+  modalImg.src = src;
+
+  modal.classList.add("active");
+  gallery.classList.add("blur");
+  document.body.classList.add("modal-open");
+}
+
+/* image loaded → remove loader & blur */
+modalImg.onload = () => {
+  loader.style.display = "none";
+  modalImg.classList.remove("loading");
+};
+
+/* ===== CLOSE IMAGE ===== */
+function closeImage() {
+  modal.classList.remove("active");
+  gallery.classList.remove("blur");
+  document.body.classList.remove("modal-open");
+
+  // reset (safety)
+  modalImg.src = "";
+  loader.style.display = "none";
+}
+
+/* ===== DOWNLOAD ===== */
 downloadBtn.onclick = () => {
   if (!currentImage) return;
 
@@ -400,8 +428,18 @@ downloadBtn.onclick = () => {
   document.body.removeChild(a);
 };
 
-/* ===== CLOSE MODAL ===== */
-closeBtn.onclick = () => modal.style.display = "none";
-modal.onclick = e => {
-  if (e.target === modal) modal.style.display = "none";
+/* ===== EVENTS ===== */
+closeBtn.onclick = (e) => {
+  e.stopPropagation();
+  closeImage();
 };
+
+modal.onclick = (e) => {
+  if (e.target === modal) closeImage();
+};
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && modal.classList.contains("active")) {
+    closeImage();
+  }
+});
